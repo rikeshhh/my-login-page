@@ -8,9 +8,16 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+        'login-image':"url('/imageOne.jpg')"
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+      },
+      fontFamily: {
+        unbounded: ['var(--font-unbounded)'],
+        roboto: ['var(--font-roboto)'],
       },
     },
   },
