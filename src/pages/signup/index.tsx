@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Label } from "@/app/components/label/Label";
-import { LoginFormValues } from "@/app/utils/type";
 import { notifySuccess } from "@/app/components/toast/Toast";
+import { LoginFormValues } from "@/app/utils/type";
 import Button from "@/app/components/button/Button";
 import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
@@ -20,12 +20,12 @@ export default function Signup() {
     reset();
   };
   return (
-    <section className=" h-screen grid md:grid-cols-2 justify-center py-12 w-full container mx-auto font-unbounded rounded-3xl">
+    <section className=" h-screen   justify-center py-12  container mx-auto font-unbounded rounded-3xl">
       <form
         className="flex flex-col justify-center md:p-16  gap-6"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h2 className="text-2xl text-center font-semibold">Signup</h2>
+        <h2 className="font-bold md:text-6xl text-center">Signup</h2>
         <div className="flex flex-col gap-4">
           <div className="form__input--section">
             <Label text="Name" htmlFor="Name" className="text-lg py-4" />

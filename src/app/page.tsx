@@ -1,10 +1,13 @@
 "use client";
-import Login from "./sections/login/Login";
+
+import Login from "@/pages/login";
+import Signup from "@/pages/signup";
 
 export default function Home() {
   return (
-    <>
-   <Login />
-    </>
+    <div className="grid grid-cols-2">
+    <Login/>
+  <Signup/>
+    </div>
   );
 }

@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { LoginFormValues } from "@/app/utils/type";
+import { notifySuccess } from "@/app/components/toast/Toast";
+import { Label } from "@/app/components/label/Label";
+import Button from "@/app/components/button/Button";
+import CustomToastContainer from "@/app/components/toast/ToastContainer";
+import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
-
-import Button from "../../components/button/Button";
-import InputField from "../../components/input/InputField";
-import { Label } from "../../components/label/Label";
-import { notifySuccess } from "../../components/toast/Toast";
-import CustomToastContainer from "../../components/toast/ToastContainer";
-import { LoginFormValues } from "../../utils/type";
 
 export default function Login() {
   const {
@@ -23,14 +22,13 @@ export default function Login() {
     reset();
   };
   return (
-    <section className=" h-screen grid md:grid-cols-2 justify-center py-12 w-full container mx-auto font-unbounded rounded-3xl">
-      <div className="bg-login-image bg-cover bg-center bg-no-repeat rounded-lg"></div>
+    <section className=" h-screen grid  py-12 w-full container mx-auto font-unbounded rounded-3xl">
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center md:p-16  gap-6"
+        className="flex flex-col justify-center md:p-16  gap-6 w-full"
       >
-        <h2 className="font-bold md:text-6xl">Welcome back...</h2>
+        <h2 className="font-bold md:text-6xl text-center">Sign In...</h2>
         <div>
           <Label text="Email" htmlFor="email" className="text-lg py-4" />
           <InputField
@@ -65,16 +63,14 @@ export default function Login() {
             className="w-full border p-4 rounded-lg"
           />
         </div>
-        {/* <div>
-          <InputField
-            name="rememberMe"
-            type="checkbox"
-            register={register}
-            placeholder="Enter your password"
-            className="border p-4 "
-          />
-          <Label text="Remeber Me" htmlFor="rememberMe" className="px-4" />
-        </div> */}
+        <div className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          {...register("rememberMe")} 
+          className="h-4 w-4"
+        />
+          <Label text="Remember Me" htmlFor="rememberMe" className="text-lg" />
+        </div>
         <div className="login__btn">
           <Button
             text="Login"
