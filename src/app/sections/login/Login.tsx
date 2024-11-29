@@ -60,7 +60,7 @@ export default function Login() {
             placeholder={Model.Password.placeholder}
             minLength={Model.Password.minLength.value}
             minMessage={Model.Password.minLength.message}
-            maxLength={Model.Password.maxLength.value}
+            maxLength={Model.Password.maxLength.value }
             maxMessage={Model.Password.maxLength.message}
             className="w-full border p-4 rounded-lg"
           />
