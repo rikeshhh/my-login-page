@@ -1,14 +1,37 @@
-import { UseFormRegister } from "react-hook-form";
+import { ReactNode } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
-export interface InputFieldProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  register: UseFormRegister<any>;
-  name: string;
+export interface LoginFormValues {
+  email: string;
+  password: string;
 }
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  text: string;
+export interface InputFieldProps {
+  placeholder?: string;
+  name: string;
+  type: string;
+  required?: boolean | string;
+  errors?: FieldErrors<any>;
+  message?: string;
+  value?: string;
+  maxLength?: number;
+  minLength?: number;
+  maxMessage?: string;
+  minMessage?: string;
+  isDisabled?: boolean;
+  className?: string; 
+  handleclick?: () => void; 
+  checked?: boolean; 
+  register: UseFormRegister<any>; 
+}
+
+export interface ButtonProps {
+  text: string; 
+  className?: string; 
+  type?: "button" | "submit" | "reset"; 
+  handleClick?: () => void; 
+  icon?: ReactNode; 
+  isDisabled?: boolean; 
 }
 
 export interface LabelProps {
@@ -17,7 +40,3 @@ export interface LabelProps {
   htmlFor: string;
 }
 
-export interface LoginFormValues {
-  email: string;
-  password: string;
-}

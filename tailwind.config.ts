@@ -14,6 +14,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        buttonPrimary:"var(--button-primary)",
       },
       fontFamily: {
         unbounded: ['var(--font-unbounded)'],
