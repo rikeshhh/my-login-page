@@ -1,23 +1,65 @@
+"use client"
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Label } from "@/app/components/label/Label";
-import { notifySuccess } from "@/app/components/toast/Toast";
+import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { LoginFormValues } from "@/app/utils/type";
+import { auth } from "@/app/lib/firebase/config";
 import Button from "@/app/components/button/Button";
 import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
 
 export default function Signup() {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<LoginFormValues>();
-  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
-    console.log(data);
-    notifySuccess("Account created Succesfully");
-    reset();
+  const onSubmit: SubmitHandler<LoginFormValues> = async(data) => {
+    setIsLoading(true);
+    try{
+      const userCredential = await createUserWithEmailAndPassword(
+        auth, 
+        data.email, 
+        data.password
+      );
+      const user = userCredential.user;
+      const db = getFirestore();
+      await setDoc(doc(db, 'users', user.uid), {
+        username: data.username,
+        email: data.email,
+        createdAt: new Date()
+      });
+      console.log(data);
+      notifySuccess("Account created Succesfully");
+      reset();
+      await router.push("/login");
+    }catch (error: unknown) {
+      switch(error.code) {
+        case 'auth/email-already-in-use':
+          notifyError("Email is already registered");
+          break;
+        case 'auth/invalid-email':
+          notifyError("Invalid email address");
+          break;
+        case 'auth/weak-password':
+          notifyError("Password is too weak");
+          break;
+        default:
+          notifyError("Failed to create account. Please try again.");
+      }
+      console.error("Signup Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <section className=" h-screen grid py-12  container p-12 font-unbounded rounded-3xl w-1/3">

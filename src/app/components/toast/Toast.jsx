@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import "./ToastMessage"
 import ToastMessage from "./ToastMessage";
 
+import "react-toastify/dist/ReactToastify.css";
+
 const Success = "Success";
 const Error = "Error";
 

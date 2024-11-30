@@ -1,25 +1,67 @@
+"use client"
+import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { LoginFormValues } from "@/app/utils/type";
-import { notifySuccess } from "@/app/components/toast/Toast";
+import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { Label } from "@/app/components/label/Label";
+import { auth } from "@/app/lib/firebase/config";
 import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
 
 export default function Login() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<LoginFormValues>();
-  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
-    console.log(data);
-    notifySuccess("Logged in successfully");
-    reset();
+  const onSubmit: SubmitHandler<LoginFormValues> = async(data) => {
+    setIsLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth, 
+        data.email, 
+        data.password
+      );
+      const user = userCredential.user;
+      console.log('User logged in:', {
+        uid: user.uid,
+        email: user.email
+      });
+  
+      notifySuccess("Logged in successfully");      
+      router.push('/');
+      
+      reset();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const authError = error as AuthError;
+        switch (authError.code) {
+          case 'auth/invalid-credential':
+            notifyError("Invalid email or password");
+            break;
+          case 'auth/user-not-found':
+            notifyError("No user found with this email");
+            break;
+          case 'auth/wrong-password':
+            notifyError("Incorrect password");
+            break;
+          default:
+            notifyError("Login failed. Please try again.");
+        }
+      }
+      console.error("Login Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <section className=" h-screen grid py-12  container p-12 font-unbounded rounded-3xl w-1/3">
@@ -75,7 +117,7 @@ export default function Login() {
             <p className="text-sm font-medium">
               Dont have an account?
             </p>
-            <Link href="/signup">
+            <Link href="/auth/signup">
               <span className="text-sm font-medium">Signup</span>
             </Link>
           </div>
