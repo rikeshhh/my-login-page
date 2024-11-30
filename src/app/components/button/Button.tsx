@@ -10,7 +10,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${className} w-full p-4 flex justify-center items-center gap-2 flex-shrink text-center font-medium rounded-lg cursor-pointer bg-buttonPrimary text-white`}
+      className={`${className} w-full p-4 flex justify-center  items-center gap-2 flex-shrink text-center font-medium rounded-lg cursor-pointer border-neutral-800 border text-white`}
       type={type}
       onClick={handleClick}
       disabled={isDisabled}

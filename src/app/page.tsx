@@ -1,13 +1,11 @@
 "use client";
 
-import Login from "@/pages/login";
-import Signup from "@/pages/signup";
+import AuthLayout from "./auth/layout";
 
 export default function Home() {
   return (
-    <div className="grid grid-cols-2">
-    <Login/>
-  <Signup/>
-    </div>
+    <section className="grid grid-cols-1 justify-center items-end h-screen bg-neutral-950">
+     <AuthLayout/>
+    </section>
   );
 }

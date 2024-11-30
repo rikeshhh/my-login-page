@@ -20,30 +20,14 @@ export default function Signup() {
     reset();
   };
   return (
-    <section className=" h-screen   justify-center py-12  container mx-auto font-unbounded rounded-3xl">
+    <section className=" h-screen grid py-12  container p-12 font-unbounded rounded-3xl w-1/3">
       <form
-        className="flex flex-col justify-center md:p-16  gap-6"
-        onSubmit={handleSubmit(onSubmit)}
+       onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col justify-end   gap-2  text-neutral-500"
       >
-        <h2 className="font-bold md:text-6xl text-center">Signup</h2>
-        <div className="flex flex-col gap-4">
-          <div className="form__input--section">
-            <Label text="Name" htmlFor="Name" className="text-lg py-4" />
-            <InputField
-              name="name"
-              register={register}
-              required={Model.Name.required}
-              value={Model.Name.pattern.value}
-              message={Model.Name.pattern.message}
-              errors={errors}
-              type={Model.Name.type}
-              placeholder={Model.Name.placeholder}
-              minLength={Model.Name.minLength.value}
-              minMessage={Model.Name.minLength.message}
-              maxLength={Model.Name.maxLength.value}
-              maxMessage={Model.Name.maxLength.message}
-            />
-          </div>
+        <h2 className="font-bold md:text-4xl text-center">Signup</h2>
+        <div className="w-full gap-4 flex flex-col">
+
           <div className="form__input--section">
             <Label text="Username" htmlFor="email" className="text-lg py-4" />
             <InputField
@@ -76,7 +60,7 @@ export default function Signup() {
               maxMessage={Model.Email.maxLength.message}
             />
           </div>
-          <div className="form__input--section form__input--section__password">
+          <div className="form__input--section">
             <Label text="Password" htmlFor="email" className="text-lg py-4" />
             <InputField
               name="password"
