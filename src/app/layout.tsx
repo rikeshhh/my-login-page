@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Unbounded,Roboto } from 'next/font/google';
+import { Unbounded,Roboto, Josefin_Sans } from 'next/font/google';
 
 import "./globals.css";
 
-const unbounded = Unbounded({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  style: ['normal'],
-  variable: '--font-unbounded',
-});
-
 const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-roboto',
+});
+const josefin = Josefin_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
   style: ['normal', 'italic'],
@@ -29,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${unbounded.variable} ${roboto.variable}  antialiased`}>
+      <body className={`${josefin.variable} ${roboto.variable}  antialiased text-foreground`}>
         {children}
       </body>
     </html>

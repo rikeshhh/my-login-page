@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Unbounded,Roboto } from 'next/font/google';
+import { Roboto,Josefin_Sans } from 'next/font/google';
 
-import "../../globals.css";
 import AuthLayout from "@/app/components/authLayout/AuthLayout";
 
-const unbounded = Unbounded({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  style: ['normal'],
-  variable: '--font-unbounded',
-});
+import "../../globals.css";
 
+const josefin = Josefin_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-roboto',
+});
 const roboto = Roboto({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${unbounded.variable} ${roboto.variable}  antialiased`}>
+      <body className={`${josefin.variable} ${roboto.variable}  antialiased`}>
        <AuthLayout>
        {children}
        </AuthLayout>

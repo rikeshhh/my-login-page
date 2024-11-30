@@ -1,5 +1,6 @@
-"use client"
+"use client";
 import { AuthError, signInWithEmailAndPassword } from "firebase/auth";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -9,6 +10,7 @@ import { LoginFormValues } from "@/app/utils/type";
 import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { Label } from "@/app/components/label/Label";
 import { auth } from "@/app/lib/firebase/config";
+import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
@@ -23,35 +25,35 @@ export default function Login() {
     reset,
     formState: { errors },
   } = useForm<LoginFormValues>();
-  const onSubmit: SubmitHandler<LoginFormValues> = async(data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
-        auth, 
-        data.email, 
+        auth,
+        data.email,
         data.password
       );
       const user = userCredential.user;
-      console.log('User logged in:', {
+      console.log("User logged in:", {
         uid: user.uid,
-        email: user.email
+        email: user.email,
       });
-  
-      notifySuccess("Logged in successfully");      
-      router.push('/');
-      
+      console.log(isLoading);
+      notifySuccess("Logged in successfully");
+      router.push("/");
+
       reset();
     } catch (error: unknown) {
       if (error instanceof Error) {
         const authError = error as AuthError;
         switch (authError.code) {
-          case 'auth/invalid-credential':
+          case "auth/invalid-credential":
             notifyError("Invalid email or password");
             break;
-          case 'auth/user-not-found':
+          case "auth/user-not-found":
             notifyError("No user found with this email");
             break;
-          case 'auth/wrong-password':
+          case "auth/wrong-password":
             notifyError("Incorrect password");
             break;
           default:
@@ -64,15 +66,23 @@ export default function Login() {
     }
   };
   return (
-    <section className=" h-screen grid py-12  container p-12 font-unbounded rounded-3xl w-1/3">
-
+    <section className=" min-h-screen grid py-12  container p-12 font-josefin rounded-3xl md:w-1/3 text-foreground">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-end items-start  gap-6  text-neutral-500"
+        className="flex flex-col justify-end items-start  gap-6 "
       >
-        <h2 className="font-bold md:text-4xl text-center">Login..</h2>
+      <div className="flex flex-col justify-center items-center gap-2 mt-4">
+      <Image
+            src="/tribali/TriBali_Logo_Web.png"
+            width={100}
+            height={100}
+            alt="logo"
+          />
+          <h2 className="text-3xl font-semibold text-center md:text-4xl">Welcome to tribali</h2>
+         <InstagramLogoIcon/>
+      </div>
         <div className="w-full">
-          <Label text="Email" htmlFor="email" className="text-lg py-4" />
+          <Label text="Email" htmlFor="email" className="text-lg md:py-4 font-bold" />
           <InputField
             name="email"
             register={register}
@@ -114,11 +124,9 @@ export default function Login() {
         <div className="w-full">
           <Button text="Login" />
           <div className="flex flex-col justify-center items-center py-4">
-            <p className="text-sm font-medium">
-              Dont have an account?
-            </p>
+            <p className="text-sm font-medium">Dont have an account?</p>
             <Link href="/auth/signup">
-              <span className="text-sm font-medium">Signup</span>
+              <span className="text-sm font-bold underline">Signup</span>
             </Link>
           </div>
         </div>

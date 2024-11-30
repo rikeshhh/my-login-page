@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --button-primary:#3e84f4;
+  --primary-color: #ada386;
+  --white-color: #f5f5f5;
+  --font-josefin-slab: "Josefin Slab", serif;
+  --font-josefin-sans: "Josefin Sans", sans-serif;
+  --font-roboto: "Roboto", serif;
 }
 
 @media (prefers-color-scheme: dark) {

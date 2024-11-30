@@ -1,6 +1,9 @@
-"use client"
+"use client";
+import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, getFirestore } from 'firebase/firestore';
+import { doc, setDoc, getFirestore } from "firebase/firestore";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -9,69 +12,91 @@ import { Label } from "@/app/components/label/Label";
 import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { LoginFormValues } from "@/app/utils/type";
 import { auth } from "@/app/lib/firebase/config";
+import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import Button from "@/app/components/button/Button";
+import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
+  console.log(isLoading);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<LoginFormValues>();
-  const onSubmit: SubmitHandler<LoginFormValues> = async(data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true);
-    try{
+    try {
       const userCredential = await createUserWithEmailAndPassword(
-        auth, 
-        data.email, 
+        auth,
+        data.email,
         data.password
       );
       const user = userCredential.user;
       const db = getFirestore();
-      await setDoc(doc(db, 'users', user.uid), {
+      await setDoc(doc(db, "users", user.uid), {
         username: data.username,
         email: data.email,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
-      console.log(data);
+     
       notifySuccess("Account created Succesfully");
+     
       reset();
-      await router.push("/login");
-    }catch (error: unknown) {
-      switch(error.code) {
-        case 'auth/email-already-in-use':
-          notifyError("Email is already registered");
-          break;
-        case 'auth/invalid-email':
-          notifyError("Invalid email address");
-          break;
-        case 'auth/weak-password':
-          notifyError("Password is too weak");
-          break;
-        default:
-          notifyError("Failed to create account. Please try again.");
+      router.push("/auth/login");
+    } catch (error: unknown) {
+      console.error("Signup Error:", error); // Debug log
+
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            notifyError("Email is already registered");
+            break;
+          case "auth/invalid-email":
+            notifyError("Invalid email address");
+            break;
+          case "auth/weak-password":
+            notifyError("Password is too weak");
+            break;
+          default:
+            notifyError("Failed to create account. Please try again.");
+        }
+      } else {
+        notifyError("An unexpected error occurred. Please try again.");
       }
-      console.error("Signup Error:", error);
     } finally {
       setIsLoading(false);
     }
+    
   };
   return (
-    <section className=" h-screen grid py-12  container p-12 font-unbounded rounded-3xl w-1/3">
+    <section className="grid p-8 h-screen  container font-josefin rounded-3xl md:w-1/3">
       <form
-       onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-end   gap-2  text-neutral-500"
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col justify-end mb-8  gap-2  text-foreground"
       >
-        <h2 className="font-bold md:text-4xl text-center">Signup</h2>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <Image
+            src="/tribali/TriBali_Logo_Web.png"
+            width={100}
+            height={100}
+            alt="logo"
+          />
+          <p className="text-sm font-bold">
+            In the meantime follow us on Instagram,or find us at the market
+            (Bondi adn Paddington) sign up to find out when we launch!
+          </p>
+          <Link href="#">
+            <InstagramLogoIcon />
+          </Link>
+        </div>
         <div className="w-full gap-4 flex flex-col">
-
           <div className="form__input--section">
-            <Label text="Username" htmlFor="email" className="text-lg py-4" />
+            <Label text="Username" htmlFor="email" className="text-lg md:py-4 font-bold" />
             <InputField
               name="username"
               register={register}
@@ -88,7 +113,7 @@ export default function Signup() {
             />
           </div>
           <div className="form__input--section">
-            <Label text="Email" htmlFor="email" className="text-lg py-4" />
+            <Label text="Email" htmlFor="email" className="text-lg md:py-4 font-bold" />
             <InputField
               name="email"
               register={register}
@@ -103,7 +128,7 @@ export default function Signup() {
             />
           </div>
           <div className="form__input--section">
-            <Label text="Password" htmlFor="email" className="text-lg py-4" />
+            <Label text="Password" htmlFor="email" className="text-lg md:py-4 font-bold" />
             <InputField
               name="password"
               className="password-input__input--padding"
@@ -122,6 +147,7 @@ export default function Signup() {
           </div>
           <Button text="Signup" />
         </div>
+        <CustomToastContainer />
       </form>
     </section>
   );

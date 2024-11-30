@@ -15,12 +15,11 @@ export default {
       },
       colors: {
         background: "var(--background)",
-        foreground: "var(--foreground)",
-        buttonPrimary:"var(--button-primary)",
+        foreground: "var(--primary-color)",
       },
       fontFamily: {
-        unbounded: ['var(--font-unbounded)'],
         roboto: ['var(--font-roboto)'],
+        josefin:['var(--font-josefin)']
       },
     },
   },

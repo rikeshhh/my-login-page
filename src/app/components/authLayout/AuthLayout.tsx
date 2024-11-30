@@ -21,15 +21,14 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   }, [images.length]);
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative min-h-screen w-full">
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
+        className="absolute inset-0 bg-cover bg-center bg-fixed transition-all duration-1000 ease-in-out h-full"
         style={{ backgroundImage: `url(${images[currentIndex]})` }}
       ></div>
 
       <div className="absolute inset-0 bg-black/40"></div>
-
-      <div className="relative z-10 flex justify-start items-end h-full">
+      <div className="relative z-10 flex justify-start items-end h-screen ">
       {children}
       </div>
     </div>
