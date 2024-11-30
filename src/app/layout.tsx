@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Unbounded,Roboto, Josefin_Sans } from 'next/font/google';
+import { Roboto, Josefin_Sans } from 'next/font/google';
 
 import "./globals.css";
 
