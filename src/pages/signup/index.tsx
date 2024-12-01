@@ -17,33 +17,24 @@ import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<LoginFormValues>();
-  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async ({
+    email,
+    password,
+  }) => {
     setIsLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      const user = userCredential.user;
-      const db = getFirestore();
-      await setDoc(doc(db, "users", user.uid), {
-        username: data.username,
-        email: data.email,
-        createdAt: new Date(),
-      });
-
+      await createUserWithEmailAndPassword(auth, email, password);
       notifySuccess("Account created Succesfully");
-      reset();
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         switch (error.code) {

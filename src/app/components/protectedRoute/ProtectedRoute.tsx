@@ -12,16 +12,14 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading) {
-      if (user) {
-        router.push("/"); 
-      }
+    if (!loading && !user) {
+      router.push("/auth/login");
     }
   }, [user, loading, router]);
 
   if (loading) {
-    return <Loader />; 
+    return <Loader />;
   }
 
-  return user ? null : <>{children}</>;
+  return children;
 }
