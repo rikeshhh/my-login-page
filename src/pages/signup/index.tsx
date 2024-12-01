@@ -67,11 +67,11 @@ export default function Signup() {
     }
   };
   return (
-    <section className="grid p-8 h-screen  container font-josefin rounded-3xl md:w-1/3">
+    <section className="grid p-8 min-h-screen  container font-josefin rounded-3xl md:w-1/3">
       {isLoading && <Loader />}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-end mb-8  gap-2  text-foreground"
+        className="flex flex-col justify-end mb-8 pb-12 gap-2  text-foreground"
       >
         <div className="flex flex-col justify-center items-center gap-4">
           <Image
