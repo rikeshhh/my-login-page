@@ -34,8 +34,6 @@ export default function Login() {
         data.email,
         data.password
       );
-      const user = userCredential.user;
-
       notifySuccess("Logged in successfully");
       router.push("/");
 

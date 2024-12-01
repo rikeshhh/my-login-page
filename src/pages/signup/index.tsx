@@ -21,7 +21,6 @@ import Model from "@/app/components/model/Model";
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const {
     register,
     handleSubmit,

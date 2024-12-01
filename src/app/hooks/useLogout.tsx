@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
-import { notifyError, notifySuccess } from "../components/toast/Toast";
+import {notifySuccess } from "../components/toast/Toast";
 import { auth } from "../lib/firebase/config";
 
 const useLogout = () => {
