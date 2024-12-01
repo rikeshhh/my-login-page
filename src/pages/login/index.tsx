@@ -10,7 +10,7 @@ import { LoginFormValues } from "@/app/utils/type";
 import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { Label } from "@/app/components/label/Label";
 import { auth } from "@/app/lib/firebase/config";
-import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import { EyeClosedIcon, EyeOpenIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
 import { Loader } from "@/app/components/loader/Loader";
 import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
@@ -18,6 +18,7 @@ import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
 
 export default function Login() {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -99,7 +100,7 @@ export default function Login() {
             maxMessage={Model.Email.maxLength.message}
           />
         </div>
-        <div className="w-full">
+        <div className="w-full relative">
           <Label text="Password" htmlFor="password" className="text-lg  py-4" />
           <InputField
             name="password"
@@ -108,13 +109,23 @@ export default function Login() {
             message={Model.Password.pattern.message}
             required={Model.Password.required}
             errors={errors}
-            type={Model.Password.type}
+            type={isPasswordVisible ? "text" : "password"}
             placeholder={Model.Password.placeholder}
             minLength={Model.Password.minLength.value}
             minMessage={Model.Password.minLength.message}
             maxLength={Model.Password.maxLength.value}
             maxMessage={Model.Password.maxLength.message}
           />
+            <span
+        onClick={() => setIsPasswordVisible((prev) => !prev)} 
+        className="absolute top-1/2 right-4 transform  cursor-pointer text-gray-500 hover:text-gray-700"
+      >
+        {isPasswordVisible ? (
+          <EyeOpenIcon width={20} height={20} />
+        ) : (
+          <EyeClosedIcon width={20} height={20} />
+        )}
+      </span>
         </div>
         <div className="flex items-center space-x-2">
           <input

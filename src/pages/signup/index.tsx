@@ -1,7 +1,6 @@
 "use client";
 import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,17 +10,20 @@ import { Label } from "@/app/components/label/Label";
 import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { LoginFormValues } from "@/app/utils/type";
 import { auth } from "@/app/lib/firebase/config";
-import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import {
+  EyeClosedIcon,
+  EyeOpenIcon,
+  InstagramLogoIcon,
+} from "@radix-ui/react-icons";
 import { Loader } from "@/app/components/loader/Loader";
 import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
 import Model from "@/app/components/model/Model";
-import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -120,7 +122,7 @@ export default function Signup() {
               maxMessage={Model.Email.maxLength.message}
             />
           </div>
-          <div className="form__input--section">
+          <div className=" w-full relative">
             <Label
               text="Password"
               htmlFor="email"
@@ -134,13 +136,23 @@ export default function Signup() {
               message={Model.Password.pattern.message}
               required={Model.Password.required}
               errors={errors}
-              type={Model.Password.type}
+              type={isPasswordVisible ? "text" : "password"}
               placeholder={Model.Password.placeholder}
               minLength={Model.Password.minLength.value}
               minMessage={Model.Password.minLength.message}
               maxLength={Model.Password.maxLength.value}
               maxMessage={Model.Password.maxLength.message}
-            ></InputField>
+            />
+            <span
+              onClick={() => setIsPasswordVisible((prev) => !prev)}
+              className="absolute top-1/2 right-4 transform  cursor-pointer text-gray-500 hover:text-gray-700"
+            >
+              {isPasswordVisible ? (
+                <EyeOpenIcon width={20} height={20} />
+              ) : (
+                <EyeClosedIcon width={20} height={20} />
+              )}
+            </span>
           </div>
           <Button text="Signup" />
         </div>

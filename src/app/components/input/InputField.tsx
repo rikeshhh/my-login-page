@@ -26,6 +26,7 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <>
       <input
+      type={type}
         onClick={handleclick}
         className={`${hasError ? "border-red-500" : ""} ${
           hasError && type == "radio" ? "input__radio" : ""
