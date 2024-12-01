@@ -29,7 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({
         onClick={handleclick}
         className={`${hasError ? "border-red-500" : ""} ${
           hasError && type == "radio" ? "input__radio" : ""
-        } ${className} w-full border  rounded-lg border-foreground text-foreground p-2 md:p-4 `}
+        } ${className} w-full   rounded-lg bg-transparent text-foreground p-2 md:p-4  border`}
         placeholder={placeholder}
         {...register(name, {
           required: required,

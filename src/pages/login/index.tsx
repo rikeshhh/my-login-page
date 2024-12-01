@@ -11,6 +11,7 @@ import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { Label } from "@/app/components/label/Label";
 import { auth } from "@/app/lib/firebase/config";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import { Loader } from "@/app/components/loader/Loader";
 import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
@@ -34,11 +35,7 @@ export default function Login() {
         data.password
       );
       const user = userCredential.user;
-      console.log("User logged in:", {
-        uid: user.uid,
-        email: user.email,
-      });
-      console.log(isLoading);
+
       notifySuccess("Logged in successfully");
       router.push("/");
 
@@ -67,22 +64,29 @@ export default function Login() {
   };
   return (
     <section className=" min-h-screen grid py-12  container p-12 font-josefin rounded-3xl md:w-1/3 text-foreground">
+      {isLoading && <Loader />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-end items-start  gap-6 "
       >
-      <div className="flex flex-col justify-center items-center gap-2 mt-4">
-      <Image
+        <div className="flex flex-col justify-center items-center gap-2 mt-4 w-full">
+          <Image
             src="/tribali/TriBali_Logo_Web.png"
             width={100}
             height={100}
             alt="logo"
           />
-          <h2 className="text-3xl font-semibold text-center md:text-4xl">Welcome to tribali</h2>
-         <InstagramLogoIcon/>
-      </div>
+          <h2 className="text-4xl font-semibold text-center md:text-4xl">
+            Welcome to tribali
+          </h2>
+          <InstagramLogoIcon />
+        </div>
         <div className="w-full">
-          <Label text="Email" htmlFor="email" className="text-lg md:py-4 font-bold" />
+          <Label
+            text="Email"
+            htmlFor="email"
+            className="text-lg md:py-4 font-bold"
+          />
           <InputField
             name="email"
             register={register}
@@ -117,12 +121,12 @@ export default function Login() {
           <input
             type="checkbox"
             {...register("rememberMe")}
-            className="h-4 w-4"
+            className="h-2 w-2 bg-transparent"
           />
           <Label text="Remember Me" htmlFor="rememberMe" className="text-lg" />
         </div>
         <div className="w-full">
-          <Button text="Login" />
+          <Button text={isLoading ? "loggin in ..." : "log in "} />
           <div className="flex flex-col justify-center items-center py-4">
             <p className="text-sm font-medium">Dont have an account?</p>
             <Link href="/auth/signup">

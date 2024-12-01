@@ -3,6 +3,9 @@
 
 import { useEffect, useState } from "react";
 
+import { ProtectedRoute } from "../protectedRoute/ProtectedRoute";
+import CustomToastContainer from "../toast/ToastContainer";
+
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const images = [
     "/tribali/Tribali_website_comingsoon1.png",
@@ -29,7 +32,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
       <div className="absolute inset-0 bg-black/40"></div>
       <div className="relative z-10 flex justify-start items-end h-screen ">
-      {children}
+      <ProtectedRoute>{children}</ProtectedRoute>
+      <CustomToastContainer/>
       </div>
     </div>
   );

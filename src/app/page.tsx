@@ -2,14 +2,13 @@
 
 import Dashboard from "@/pages/dashboard/page";
 
-import { ProtectedRoute } from "./components/protectedRoute/ProtectedRoute";
+import CustomToastContainer from "./components/toast/ToastContainer";
 
 export default function Home() {
   return (
-    <ProtectedRoute>
-      <section className="grid grid-cols-1 justify-center h-screen bg-neutral-950 text-white">
-        <Dashboard />
-      </section>
-    </ProtectedRoute>
+    <section className="grid grid-cols-1 justify-center h-screen bg-neutral-950 text-white">
+       <Dashboard />
+       <CustomToastContainer/>
+    </section>
   );
 }

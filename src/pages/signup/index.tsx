@@ -13,6 +13,7 @@ import { notifyError, notifySuccess } from "@/app/components/toast/Toast";
 import { LoginFormValues } from "@/app/utils/type";
 import { auth } from "@/app/lib/firebase/config";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import { Loader } from "@/app/components/loader/Loader";
 import Button from "@/app/components/button/Button";
 import CustomToastContainer from "@/app/components/toast/ToastContainer";
 import InputField from "@/app/components/input/InputField";
@@ -21,7 +22,6 @@ import Model from "@/app/components/model/Model";
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  console.log(isLoading);
   const {
     register,
     handleSubmit,
@@ -43,14 +43,10 @@ export default function Signup() {
         email: data.email,
         createdAt: new Date(),
       });
-     
-      notifySuccess("Account created Succesfully");
-     
-      reset();
-      router.push("/auth/login");
-    } catch (error: unknown) {
-      console.error("Signup Error:", error); // Debug log
 
+      notifySuccess("Account created Succesfully");
+      reset();
+    } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         switch (error.code) {
           case "auth/email-already-in-use":
@@ -71,10 +67,10 @@ export default function Signup() {
     } finally {
       setIsLoading(false);
     }
-    
   };
   return (
     <section className="grid p-8 h-screen  container font-josefin rounded-3xl md:w-1/3">
+      {isLoading && <Loader />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-end mb-8  gap-2  text-foreground"
@@ -96,7 +92,11 @@ export default function Signup() {
         </div>
         <div className="w-full gap-4 flex flex-col">
           <div className="form__input--section">
-            <Label text="Username" htmlFor="email" className="text-lg md:py-4 font-bold" />
+            <Label
+              text="Username"
+              htmlFor="email"
+              className="text-lg md:py-4 font-bold"
+            />
             <InputField
               name="username"
               register={register}
@@ -113,7 +113,11 @@ export default function Signup() {
             />
           </div>
           <div className="form__input--section">
-            <Label text="Email" htmlFor="email" className="text-lg md:py-4 font-bold" />
+            <Label
+              text="Email"
+              htmlFor="email"
+              className="text-lg md:py-4 font-bold"
+            />
             <InputField
               name="email"
               register={register}
@@ -128,7 +132,11 @@ export default function Signup() {
             />
           </div>
           <div className="form__input--section">
-            <Label text="Password" htmlFor="email" className="text-lg md:py-4 font-bold" />
+            <Label
+              text="Password"
+              htmlFor="email"
+              className="text-lg md:py-4 font-bold"
+            />
             <InputField
               name="password"
               className="password-input__input--padding"
