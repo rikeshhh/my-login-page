@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
